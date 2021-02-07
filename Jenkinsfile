@@ -6,6 +6,12 @@ agent any
  tools{
     maven 'maven'
  }
+//Dynamically read the values from pom.xml. Must install "Pipeline Utility Plugin" in maven.
+environment{
+    ArtifactId = readMavenPom().getArtifactId()
+    Version = readMavenPom().getVersion()
+    Name = readMavenPom().getName()
+}
 //Stages in the pipeline
     stages{
         //Stage 1, build stage
@@ -15,13 +21,28 @@ agent any
             }
 
         }
+        //Stage to read values from pom.xml
+        stage ('ReadMavenPom'){
+            steps{
+                echo "ArtifactId is ${ArtifactId}"
+                echo "Version is ${Version}"
+                echo "Name is ${Name}"
+            }
+        }
         //Stage 2, Test stage
         stage ('Test'){
             steps{
                 echo 'Testing!!!'
             }
         }
-        //Stage 3, Deploying
+        //Stage 3, Upload to Nexus
+        stage ('Upload'){
+             steps{
+            //     nexusArtifactUploader artifacts: [[artifactId: 'AromalDevOps', classifier: '', file: 'target/AromalDevOps-0.0.4-SNAPSHOT.war', type: 'war']], credentialsId: '215501f5-28a1-4b44-bba9-31dbffc5e0a7', groupId: 'com.aromal', nexusUrl: 'privateipv4address:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'Aromal-SNAPSHOT', version: '0.0.4-SNAPSHOT'
+            echo "Upload to Nexus!!"
+             }
+            
+        }
         stage ('Deploying'){
             steps{
                 echo 'Installing!!!'
