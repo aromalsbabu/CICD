@@ -40,7 +40,7 @@ environment{
         //Stage 3, Upload to Nexus
         stage ('Upload'){
              steps{
-            //     nexusArtifactUploader artifacts: [[artifactId: 'AromalDevOps', classifier: '', file: 'target/AromalDevOps-0.0.4-SNAPSHOT.war', type: 'war']], credentialsId: '215501f5-28a1-4b44-bba9-31dbffc5e0a7', groupId: 'com.aromal', nexusUrl: 'privateipv4address:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'Aromal-SNAPSHOT', version: '0.0.4-SNAPSHOT'
+              //  nexusArtifactUploader artifacts: [[artifactId: "${ArtifactId}", classifier: '', file: 'target/AromalDevOps-0.0.4-SNAPSHOT.war', type: 'war']], credentialsId:// //'215501f5-28a1-4b44-bba9-31dbffc5e0a7', groupId: "${GroupId}", nexusUrl: 'privateipv4address:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'Aromal-SNAPSHOT', version: "${Version}"
             echo "Upload to Nexus!!"
              }
             
